@@ -1,0 +1,22 @@
+#include <iostream>
+#include <fstream>
+#include <vector>
+using namespace std;
+ifstream fin("blist.in");
+ofstream fout("blist.out");
+int main() {
+     int n,a1,a2,a3,m=0;
+    vector<int> v(1005,0);
+    fin >> n;
+    for (int i = 0; i < n; i++) {
+        fin>>a1>>a2>>a3;
+        for (int j = a1; j <= a2; j++) {
+            v[j]+=a3;
+        }
+    }
+      for (int i : v) {
+          if (i>m)
+              m=i;
+      }
+    fout<<m<<endl;
+    }
