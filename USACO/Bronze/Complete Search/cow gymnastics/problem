@@ -1,0 +1,56 @@
+
+
+#include <fstream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+ifstream fin("gymnastics.in");
+ofstream fout("gymnastics.out");
+
+
+int main()
+{
+    int n,k,m=0;
+    fin>>k>>n;
+    vector<int> v;
+    int a[10][20]={0};
+    for(int i=0;i<k;i++)
+    {
+        for(int j=0;j<n;j++)
+        {
+            fin>>a[i][j];
+        }
+    }
+
+    for(int r=0;r<n;r++)
+    {
+        int j=0;
+        while (a[0][j]!=r+1)
+        {
+            j++;
+        }
+            for(int g=j+1;g<n;g++)
+            {
+                v.push_back(a[0][g]);
+            }
+        for (int i=1;i<k;i++)
+        {
+            int j=0;
+            while (a[i][j]!=r+1)
+            {
+                j++;
+            }
+                for (int h=0;h<j;h++)
+                {
+                    if (find(v.begin(),v.end(),a[i][h])!=v.end())
+                    {
+                        v.erase(remove(v.begin(),v.end(),a[i][h]),v.end());
+                    }
+                }
+        }
+        m+=v.size();
+        v.clear();
+    }
+    fout<<m<<endl;
+
+}
