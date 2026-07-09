@@ -1,0 +1,37 @@
+Blocks game
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <cstring>
+#include <algorithm>
+using namespace std;
+ifstream fin("blocks.in");
+ofstream fout("blocks.out");
+int main() {
+    vector<int> v(26,0);
+    vector<int> v1(26,0);
+    vector<int> v2(26,0);
+
+    int n;
+    char a1[11],a2[11];
+    fin >> n;
+    for (int i = 0; i < n; i++) {
+        fin>>a1>>a2;
+        for (int j = 0; j < strlen(a2); j++) {
+            v2[a2[j]-'a']++;
+
+        }
+        for (int j = 0; j < strlen(a1); j++) {
+            v1[a1[j]-'a']++;
+
+        }
+        for (int k = 0; k < 26; k++) {
+            v[k]=v[k]+((v1[k]+v2[k])-min(v1[k],v2[k]));
+        }
+        v1.assign(v1.size(),0);
+        v2.assign(v2.size(),0);
+    }
+    for (int i = 0; i < 26; i++) {
+        fout<<v[i]<<endl;
+    }
+    }	
