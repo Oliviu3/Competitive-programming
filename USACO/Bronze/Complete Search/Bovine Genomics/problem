@@ -1,0 +1,48 @@
+
+#include <fstream>
+#include <vector>
+#include <algorithm>
+#include <iostream>
+using namespace std;
+ifstream fin("cownomics.in");
+ofstream fout("cownomics.out");
+
+
+int main()
+{
+    vector<string> cowsp;
+    vector<string> cowpl;
+    int n,m,w=0;
+    string s;
+    fin>>n>>m;
+    for (int i=0;i<n;i++)
+    {
+        fin>>s;
+        cowsp.push_back(s);
+    }
+    for (int i=0;i<n;i++)
+    {
+        fin>>s;
+        cowpl.push_back(s);
+    }
+    for (int i=0;i<m;i++)
+    {
+        int p2=0;
+        for (int j=0;j<n;j++)
+        {
+            char p=cowsp[j][i];
+            int p1=0;
+            for (int k=0;k<n;k++)
+            {
+                if (cowpl[k][i]!=p)
+                    p1++;
+                if (p1==n)
+                    p2++;
+            }
+        }
+        if (p2==n)
+            w++;
+    }
+    fout<<w<<"\n";
+    return 0;
+}
