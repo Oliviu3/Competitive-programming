@@ -1,0 +1,65 @@
+
+#include <fstream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+ifstream fin("traffic.in");
+ofstream fout("traffic.out");
+
+struct car
+{
+   string f;
+   int f1,f2;
+};
+int main()
+{
+   int n,mi1=0,ma1=1001;
+   fin>>n;
+   vector <car> v(n);
+   for (int i=0;i<n;i++)
+   {
+      fin>>v[i].f>>v[i].f1>>v[i].f2;
+   }
+   for (int i=n-1;i>=0;i--)
+   {
+      if (v[i].f=="on")
+      {
+         mi1-=v[i].f2;
+         ma1-=v[i].f1;
+         mi1 = max(mi1, 0);
+      }
+      else if (v[i].f=="off")
+      {
+         mi1+=v[i].f1;
+         ma1+=v[i].f2;
+      }
+      else if (v[i].f=="none")
+      {
+         mi1=max(mi1,v[i].f1);
+         ma1=min(ma1,v[i].f2);
+      }
+   }
+   fout<<mi1<<" "<<ma1<<endl;
+   mi1=0;
+   ma1=1001;
+   for (int i=0;i<n;i++)
+   {
+      if (v[i].f=="on")
+      {
+         mi1+=v[i].f1;
+         ma1+=v[i].f2;
+      }
+      else if (v[i].f=="off")
+      {
+         mi1-=v[i].f2;
+         ma1-=v[i].f1;
+         mi1 = max(mi1, 0);
+      }
+      else if (v[i].f=="none")
+      {
+         mi1=max(mi1,v[i].f1);
+         ma1=min(ma1,v[i].f2);
+      }
+   }
+   fout<<mi1<<" "<<ma1<<endl;
+}
