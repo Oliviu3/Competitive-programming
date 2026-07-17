@@ -1,0 +1,50 @@
+
+#include <vector>
+#include <algorithm>
+#include <cstdio>
+#include <iostream>
+#include <set>
+
+using namespace std;
+
+int main()
+{
+  freopen("lifeguards.in", "r", stdin);
+  freopen("lifeguards.out", "w", stdout);
+  int n;
+  vector<int> start;
+  vector<int> end;
+  vector<int> time(1000,0);
+  cin >> n;
+  for (int i = 0; i < n; i++)
+  {
+    int x,y;
+    cin >> x >> y;
+    start.push_back(x);
+    end.push_back(y);
+    for (int j=x; j<y; j++)
+    {
+      time[j]++;
+    }
+  }
+  int work_time = 0,work_max=0;
+  for (int i = 0; i < n; i++)
+  {
+    for (int j=0; j<1000; j++)
+    {
+      if (j>=start[i] && j<end[i] && time[j]>1)
+      {
+        work_time++;
+      }
+      else if ((j<start[i] || j>=end[i]) && time[j]>0)
+      {
+       work_time++;
+      }
+    }
+    if (work_time>work_max)
+      work_max = work_time;
+    work_time = 0;
+  }
+  cout << work_max << endl;
+}
+
