@@ -1,0 +1,40 @@
+
+#include <vector>
+#include <algorithm>
+#include <cstdio>
+#include <iostream>
+#include <set>
+
+using namespace std;
+
+int main()
+{
+  freopen("pails.in", "r", stdin);
+  freopen( "pails.out", "w", stdout);
+  int x,y,m;
+  cin>>x>>y>>m;
+  if (m%y==0 || m%x==0)
+  {
+    cout<<m;
+  }
+    else
+    {
+      int milk=0,j=0,n=0;
+      while (y*j<m)
+      {
+        n=y*j;
+        while (n<=m)
+        {
+          n+=x;
+        }
+        n-=x;
+        if (n>=milk)
+        {
+          milk=n;
+        }
+        j++;
+        n=0;
+      }
+      cout<<milk<<endl;
+    }
+  }
