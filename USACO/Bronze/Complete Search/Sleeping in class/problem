@@ -1,0 +1,76 @@
+#include <algorithm>
+#include <iostream>
+#include <vector>
+#include <numeric>
+using namespace std;
+int div (int a)
+{
+    /*if (a==2)
+        return 1;
+    else
+    {
+        for (int i=2;i<=a/2;i++)
+    }*/
+    for (int i=a/2;i>=2;i--)
+    {
+        if (a%i==0)
+            return i;
+    }
+    return a;
+}
+
+int main()
+{
+    int t;
+    cin>>t;
+    for(int i=0;i<t;i++)
+    {
+        int n;
+        cin>>n;
+        vector <int> a(n);
+        int g=0;
+        for(int j=0;j<n;j++)
+        {
+            int r;
+            cin>>a[j];
+            if (j>0)
+            {
+                if(a[j]==a[j-1])
+                    g++;
+            }
+
+        }
+        if(g==n-1)
+        {
+            cout<<0<<endl;
+            continue;
+        }
+        bool valid=false;
+        int m=accumulate(a.begin(),a.end(),0);
+        int r=1;
+        while(valid==false)
+        {
+            int ma=0,ok=0;
+            for(int j=0;j<a.size();j++)
+            {
+                ma+=a[j];
+                if(ma==r)
+                {
+                    ma=0;
+                }
+                else if(ma>r)
+                {
+                    ok=1;
+                    break;
+                }
+            }
+            if (m%r==0 && ok==0)
+            {
+                valid=true;
+                break;
+            }
+            r++;
+        }
+            cout<<n-(m/r)<<endl;
+    }
+}
