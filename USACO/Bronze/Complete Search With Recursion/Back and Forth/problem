@@ -1,0 +1,49 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+vector<int> firstb(10),secondb(10);
+void barns(vector<bool>ver,int k,int milk,int &var) {
+    if(k==4)
+        {
+        if(ver[milk]==0)
+        {
+            var++;
+            ver[milk]=1;
+        }
+    } else
+    {
+        if(k%2==0)
+        {
+            for(int i=0; i<10; i++)
+            {
+              milk-=firstb[i];
+              barns(ver,k+1,milk,var);
+              milk+=firstb[i];
+
+            }
+        }
+        else
+        {
+            for(int i=0; i<10; i++)
+            {
+              milk+=firstb[i];
+              barns(ver,k+1,milk,var);
+              milk-=firstb[i];
+            }
+        }
+    }
+}
+int main() {
+    freopen("backforth.in", "r", stdin);
+	freopen("backforth.out", "w", stdout);
+    int var=0;
+    for(int i=0; i<10; i++) {
+        cin>>firstb[i];
+    }
+    for(int i=0; i<10; i++) {
+        cin>>secondb[i];
+    }
+    vector<bool>ver(3000,0);
+    barns(ver,0,1000,var);
+    cout<<var;
+}
