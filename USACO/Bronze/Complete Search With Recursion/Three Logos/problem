@@ -1,0 +1,30 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+struct vec2
+{
+    int x,y;
+    long long a;
+};
+vector<vec2> cor(3);
+void logos(vector<vector<char>> &mat)
+{
+
+}
+int main()
+{
+    cin>>cor[0].x>>cor[0].y>>cor[1].x>>cor[1].y>>cor[2].x>>cor[2].y;
+    cor[0].a=cor[0].x*cor[0].y;
+    cor[1].a=cor[1].x*cor[1].y;
+    cor[2].a=cor[2].x*cor[2].y;
+    float sq=sqrt(cor[0].a+cor[1].a+cor[2].a);
+    if(sq==int(sq))
+    {
+        /*int g=sqrt(cor[0].a+cor[1].a+cor[2].a);
+        vector<vector<char>> mat(g-1,(g-1,'0'));
+        logos(mat);*/
+    }
+    else
+        cout<<-1;
+}
