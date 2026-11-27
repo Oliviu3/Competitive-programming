@@ -1,0 +1,102 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int main()
+{
+    int q,n;
+    cin>>n>>q;
+    vector<long long> prices(n);
+    for(int i=0; i<n; i++)
+    {
+        cin>>prices[i];
+    }
+    for(int i=1; i<n; i++)
+    {
+        prices[i]=min(prices[i],2*prices[i-1]);
+    }
+    while(prices.size() < 31)
+        prices.push_back(2 * prices.back());
+        n = prices.size();
+
+    while(q--)
+    {
+
+        long long ans= LLONG_MAX;
+        long long x;
+        long long price=0;
+        cin>>x;
+        while(x>0)
+        {
+            long long w,w1=1,y=0;
+            for(int i=1; i<n; i++)
+            {
+                w=w1;
+                w1*=2;
+                if(w1>x)
+                {
+                    ans=min(ans,price+prices[i]);
+                    y=w;
+                    price+=prices[i-1];
+                    break;
+                }
+            }
+            x-=y;
+        }
+        ans = min(ans, price);
+
+        cout << ans << '\n';
+
+    }
+}
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int main()
+{
+    int q,n;
+    cin>>n>>q;
+    vector<long long> prices(n);
+    for(int i=0; i<n; i++)
+    {
+        cin>>prices[i];
+    }
+    for(int i=1; i<n; i++)
+    {
+        prices[i]=min(prices[i],2*prices[i-1]);
+    }
+    while(prices.size() < 31)
+        prices.push_back(2 * prices.back());
+        n = prices.size();
+
+    while(q--)
+    {
+
+        long long ans= LLONG_MAX;
+        long long x;
+        long long price=0;
+        cin>>x;
+        while(x>0)
+        {
+            long long w,w1=1,y=0;
+            for(int i=1; i<n; i++)
+            {
+                w=w1;
+                w1*=2;
+                if(w1>x)
+                {
+                    ans=min(ans,price+prices[i]);
+                    y=w;
+                    price+=prices[i-1];
+                    break;
+                }
+            }
+            x-=y;
+        }
+        ans = min(ans, price);
+
+        cout << ans << '\n';
+
+    }
+}
