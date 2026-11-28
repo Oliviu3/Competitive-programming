@@ -7,24 +7,103 @@ struct vec2
     int x,y;
     long long a;
 };
-vector<vec2> cor(3);
-void logos(vector<vector<char>> &mat)
+bool logos(vector<vector<char>> mat, int sq, int log,
+           vector<char> lit, vector<int> lit1, vector<vec2> cor)
 {
+    if (log == 3)
+    {
+        cout << sq << '\n';
+        for (const auto& row : mat)
+        {
+            for (char cell : row)
+                cout << cell;
+            cout << '\n';
+        }
+        return true;
+    }
 
+    int i = 0, j = 0;
+    while (mat[i][j] != '0')
+    {
+        ++j;
+        if (j == sq)
+        {
+            j = 0;
+            ++i;
+        }
+    }
+
+    for (int g = 0; g < 2; ++g)
+    {
+        for (int x = 0; x < 3; ++x)
+        {
+            if (lit1[x] == 0)
+                continue;
+
+            int h = cor[x].x;
+            int w = cor[x].y;
+            if (g == 1)
+                swap(h, w);
+
+            if (i + h > sq || j + w > sq)
+                continue;
+
+            bool ok = true;
+            for (int r = i; r < i + h && ok; ++r)
+            {
+                for (int c = j; c < j + w; ++c)
+                {
+                    if (mat[r][c] != '0')
+                    {
+                        ok = false;
+                        break;
+                    }
+                }
+            }
+
+            if (!ok)
+                continue;
+
+            for (int r = i; r < i + h; ++r)
+                for (int c = j; c < j + w; ++c)
+                    mat[r][c] = lit[x];
+
+            lit1[x] = 0;
+
+            if (logos(mat, sq, log + 1, lit, lit1, cor))
+                return true;
+
+            // Undo this attempt before trying the next logo or rotation.
+            lit1[x] = 1;
+            for (int r = i; r < i + h; ++r)
+                for (int c = j; c < j + w; ++c)
+                    mat[r][c] = '0';
+        }
+    }
+
+    return false;
 }
 int main()
 {
+
+    vector<vec2> cor(3);
+    vector<char> lit = {'A','B','C'};
+    vector<int> lit1 ={1,1,1};
     cin>>cor[0].x>>cor[0].y>>cor[1].x>>cor[1].y>>cor[2].x>>cor[2].y;
     cor[0].a=cor[0].x*cor[0].y;
     cor[1].a=cor[1].x*cor[1].y;
     cor[2].a=cor[2].x*cor[2].y;
-    float sq=sqrt(cor[0].a+cor[1].a+cor[2].a);
-    if(sq==int(sq))
+    long long area = cor[0].a + cor[1].a + cor[2].a;
+    int sq = sqrt(area);
+
+    if (1LL * sq * sq != area)
     {
-        /*int g=sqrt(cor[0].a+cor[1].a+cor[2].a);
-        vector<vector<char>> mat(g-1,(g-1,'0'));
-        logos(mat);*/
+        cout << -1 << '\n';
+        return 0;
     }
-    else
-        cout<<-1;
+
+    vector<vector<char>> mat(sq, vector<char>(sq, '0'));
+    if (!logos(mat, sq, 0, lit, lit1, cor))
+        cout << -1 << '\n';
+
 }
